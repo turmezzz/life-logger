@@ -24,8 +24,7 @@ fun Application.configureRouting() {
         post("delete/{id}") {
             call.respond(ticketService.delete(DeleteRequest(id = call.parameters["id"]!!.toLong())))
         }
-
-        post("stats") {
+        post("table") {
             call.respondText(ticketService.table())
         }
     }
