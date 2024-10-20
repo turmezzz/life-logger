@@ -38,9 +38,9 @@ class TicketDao {
         TicketTable.update({ TicketTable.id eq id }) {
             it[TicketTable.doneAt] = doneAt.toJavaLocalDateTime()
         }
-        val selectStament = TicketTable.select { TicketTable.id eq id }.limit(1).map(::resultRowToTicket)
-        assert(selectStament.size == 1) { "Expected to find exactly 1" }
-        selectStament[0]
+        val tickets = TicketTable.select { TicketTable.id eq id }.limit(1).map(::resultRowToTicket)
+        require(tickets.size == 1) { "Expected to find exactly 1" }
+        tickets[0]
     }
 
     suspend fun selectTickets(): List<Ticket> = dbQuery {

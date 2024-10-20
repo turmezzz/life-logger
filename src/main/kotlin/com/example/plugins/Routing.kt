@@ -1,5 +1,8 @@
 package com.example.plugins
 
+import com.example.models.AddRequest
+import com.example.models.DeleteRequest
+import com.example.models.DoneRequest
 import com.example.service.TicketService
 import io.ktor.server.application.*
 import io.ktor.server.response.respond
@@ -10,22 +13,20 @@ fun Application.configureRouting() {
     val ticketService = TicketService()
     routing {
         post("add/{title}") {
-            val title = call.parameters["title"]!!
-            val id = ticketService.add(title)
-            call.respondText("id: $id")
+            call.respond(ticketService.add(AddRequest(title = call.parameters["title"]!!)))
         }
         post("done/{id}") {
-            val id = call.parameters["id"]!!.toLong()
-            val doneAt = ticketService.done(id)
-            call.respondText("doneAt: $doneAt")
+            call.respond(ticketService.done(DoneRequest(id = call.parameters["id"]!!.toLong())))
         }
         post("list") {
-            val tickets = ticketService.list()
-            call.respond(tickets)
+            call.respond(ticketService.list())
         }
         post("delete/{id}") {
-            val id = call.parameters["id"]!!.toLong()
-            ticketService.delete(id)
+            call.respond(ticketService.delete(DeleteRequest(id = call.parameters["id"]!!.toLong())))
+        }
+
+        post("stats") {
+            call.respondText(ticketService.table())
         }
     }
 }
