@@ -37,6 +37,7 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("org.postgresql:postgresql:$postgres_version")
+    implementation("com.google.cloud.sql:postgres-socket-factory:1.3.1") // Add this dependency
     implementation("com.h2database:h2:$h2_version")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("io.ktor:ktor-server-netty-jvm")
